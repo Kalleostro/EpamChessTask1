@@ -1,6 +1,6 @@
 namespace ChessLibrary.Figures
 {
-    public class Pawn
+    public class Pawn:Figure
     {
         
     }

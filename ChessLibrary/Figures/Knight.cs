@@ -1,6 +1,6 @@
 namespace ChessLibrary.Figures
 {
-    public class Knight
+    public class Knight:Figure
     {
         
     }

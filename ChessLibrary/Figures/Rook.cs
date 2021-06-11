@@ -1,6 +1,6 @@
 namespace ChessLibrary.Figures
 {
-    public class Rook
+    public class Rook:Figure
     {
         
     }

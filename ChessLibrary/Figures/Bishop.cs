@@ -1,7 +1,6 @@
 namespace ChessLibrary.Figures
 {
-    public class Bishop
+    public class Bishop:Figure
     {
-        
     }
 }
