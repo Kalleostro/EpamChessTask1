@@ -1,12 +1,17 @@
 ﻿using System;
+using ChessLibrary;
 
 namespace ChessAplication
 {
     class Program
     {
-        static void Main(string[] args)
+        private Player player1;
+        private Player player2;
+
+        void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            player1 = new Player();
+            player2 = new Player();
         }
     }
 }
