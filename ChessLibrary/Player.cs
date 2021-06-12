@@ -1,19 +1,25 @@
 using System.Collections.Generic;
 using ChessLibrary.Figures;
+using System.Linq;
 
 namespace ChessLibrary
 {
     public class Player
     {
-        public string Color;
+        private ChessColors color;
         public bool Turn;
-        public List<Figure> FiguresLeft = new List<Figure>();
-        public List<Figure> FiguresDead = new List<Figure>();
+        public List<Figure> FiguresLeft;
+        public List<Figure> FiguresDead;
 
-        public Player(string color)
+        public Player(ChessColors color)
         {
             InitializeFigures();
-            this.Color = color;
+            this.color = color;
+        }
+
+        public Figure GetFigure(Position position)
+        {
+            return FiguresLeft.First(figure => figure.Position.Equals(position));
         }
 
         public void ChangeFigureStatus(Figure figure)
@@ -26,10 +32,10 @@ namespace ChessLibrary
         }
         private void InitializeFigures()
         {
-            if (Color == "white")
+            if (color == ChessColors.White)
             {
                 for (uint i = 0; i < 8; i++)
-                    FiguresLeft.Add(new Pawn(i, 2));
+                    FiguresLeft.Add(new Pawn(i, 2, color));
                 FiguresLeft.Add(new Bishop(3,1));
                 FiguresLeft.Add(new Bishop(6,1));
                 FiguresLeft.Add(new Rook(1,1));
@@ -42,7 +48,7 @@ namespace ChessLibrary
             else
             {
                 for (uint i = 0; i < 8; i++)
-                    FiguresLeft.Add(new Pawn(i, 7));
+                    FiguresLeft.Add(new Pawn(i, 7, color));
                 FiguresLeft.Add(new Bishop(3,8));
                 FiguresLeft.Add(new Bishop(6,8));
                 FiguresLeft.Add(new Rook(1,8));
@@ -52,9 +58,21 @@ namespace ChessLibrary
                 FiguresLeft.Add(new Queen(5,8));
                 FiguresLeft.Add(new King(4,8));
             }
-            
+        }
 
+        public override bool Equals(object? obj)
+        {
+            return base.Equals(obj);
+        }
 
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

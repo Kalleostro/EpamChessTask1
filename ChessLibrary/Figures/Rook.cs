@@ -5,7 +5,7 @@ namespace ChessLibrary.Figures
         public Rook(uint startX, uint startY)
         {
             IsDead = false;
-            var coordinates = new Coordinates(startX, startY);
+            var coordinates = new Position(startX, startY);
         }
     }
 }
