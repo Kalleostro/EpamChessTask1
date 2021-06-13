@@ -5,7 +5,7 @@ namespace ChessLibrary.Figures
 {
     public class Bishop:Figure
     {
-        public Bishop(uint startX, uint startY)
+        public Bishop(int startX, int startY)
         {
             IsDead = false;
             var coordinates = new Position(startX, startY);

@@ -23,18 +23,24 @@ namespace ChessLibrary
         {
             return FiguresLeft.First(figure => figure.Position.Equals(position));
         }
-
+        /// <summary>
+        /// changing figure status in case of death
+        /// </summary>
+        /// <param name="figure">concrete dead figure</param>
         public void ChangeFigureStatus(Figure figure)
         {
             if (!figure.IsDead) return;
             FiguresLeft.Remove(figure);
             FiguresDead.Add(figure);
         }
+        /// <summary>
+        /// initialize desk or players figures
+        /// </summary>
         private void InitializeFigures()
         {
             if (color == ChessColors.White)
             {
-                for (uint i = 0; i < 8; i++)
+                for (int i = 0; i < 8; i++)
                     FiguresLeft.Add(new Pawn(i, 2, color));
                 FiguresLeft.Add(new Bishop(3,1));
                 FiguresLeft.Add(new Bishop(6,1));
@@ -47,7 +53,7 @@ namespace ChessLibrary
             }
             else
             {
-                for (uint i = 0; i < 8; i++)
+                for (int i = 0; i < 8; i++)
                     FiguresLeft.Add(new Pawn(i, 7, color));
                 FiguresLeft.Add(new Bishop(3,8));
                 FiguresLeft.Add(new Bishop(6,8));

@@ -8,7 +8,7 @@ namespace ChessLibrary.Figures
     {
         private ChessColors color;
         private bool isFirstTurn = true; 
-        public Pawn(uint startX, uint startY, ChessColors color)
+        public Pawn(int startX, int startY, ChessColors color)
         {
             IsDead = false;
             var position = new Position(startX, startY);
@@ -18,6 +18,7 @@ namespace ChessLibrary.Figures
         public override List<Position> GetPositions(ChessDesk desk)
         {
             var positions = new List<Position>();
+            //for the first turn
             if (isFirstTurn)
             {
                 if (color.Equals(ChessColors.White))
@@ -31,7 +32,8 @@ namespace ChessLibrary.Figures
                     positions.Add(new Position(this.Position.x, this.Position.y - 1));
                 }
                 isFirstTurn = false;
-            }
+            } 
+            //simple turn
             else switch (color)
             {
                 case ChessColors.White:
@@ -43,6 +45,7 @@ namespace ChessLibrary.Figures
                 default:
                     throw new Exception("Cannot finish the turn: ");
             }
+            //if diagonally exists an enemy figure
             foreach (Figure figure in color == ChessColors.White? desk.player2.FiguresLeft : desk.player1.FiguresLeft)
                 if (color == ChessColors.White)
                 {
