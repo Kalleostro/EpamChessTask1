@@ -29,7 +29,6 @@ namespace ChessLibrary
         /// <param name="figure">concrete dead figure</param>
         public void ChangeFigureStatus(Figure figure)
         {
-            if (!figure.IsDead) return;
             FiguresLeft.Remove(figure);
             FiguresDead.Add(figure);
         }

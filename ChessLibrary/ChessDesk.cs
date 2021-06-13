@@ -8,7 +8,7 @@ namespace ChessLibrary
     {
         public Player player1;
         public Player player2;
-        private Player currentTurnPlayer;
+        public Player currentTurnPlayer;
         private Logger logList;
 
         public ChessDesk()
@@ -34,7 +34,9 @@ namespace ChessLibrary
                 logList.MakeLog(e.Message);
             }
         }
-
+        /// <summary>
+        /// kill the enemy figure if it intersects with the movable one
+        /// </summary>
         private void CheckIfIntersects()
         {
             foreach (var player1Figure in player1.FiguresLeft)
@@ -56,6 +58,13 @@ namespace ChessLibrary
                     }
                 }
             }
+        }
+
+        public void ExchangePawn(Pawn pawn)
+        {
+            int pawnIndex = currentTurnPlayer.FiguresLeft.IndexOf(pawn);
+            Queen newFigure = new Queen(pawn.Position.x, pawn.Position.y);
+            currentTurnPlayer.FiguresLeft[pawnIndex] = newFigure;
         }
     }
 }

@@ -26,23 +26,30 @@ namespace ChessLibrary.Figures
              return positions;
         }
 
-        public override List<Position> CalculateAvailablePositions(Position directPosition, ChessDesk desk)
+        protected override IEnumerable<Position> CalculateAvailablePositions(Position directPosition, ChessDesk desk)
         {
-            bool intersectsFlag = false;
             var availableList = new List<Position>();
             var temporaryPosition = this.Position;
-            while (temporaryPosition.x is < 8 and >= 1 && temporaryPosition.y is < 8 and >= 1 && !intersectsFlag)
+            if (temporaryPosition.x is < 9 and >= 1 && temporaryPosition.y is < 9 and >= 1)
             {
-                temporaryPosition.x += directPosition.x; 
-                temporaryPosition.y += directPosition.y; 
-                availableList.Add(temporaryPosition);
-                if (desk.player1.FiguresLeft.Any(figure => Equals(figure.Position, temporaryPosition)))
+                if (desk.player1.FiguresLeft.Any(figure => Equals(figure.Position, 
+                    new Position(temporaryPosition.x += directPosition.x,temporaryPosition.y += directPosition.y))))
                 {
-                    if (color == ChessColors.White)
+                    return availableList;
                 }
-
-                intersectsFlag = true;
+                if (desk.player2.FiguresLeft.Any(figure => Equals(figure.Position, 
+                    new Position(temporaryPosition.x += directPosition.x,temporaryPosition.y += directPosition.y))))
+                {
+                    return availableList;
+                }
+                else
+                {
+                    temporaryPosition.x += directPosition.x;
+                    temporaryPosition.y += directPosition.y;
+                    availableList.Add(temporaryPosition);
+                }
             }
+            return availableList;
         }
 
         public override void Move(Position position, ChessDesk desk)

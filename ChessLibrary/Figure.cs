@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection.Emit;
 using System.Collections.Generic;
+using System.Linq;
 using ChessLibrary.Figures;
 
 namespace ChessLibrary
@@ -21,13 +22,38 @@ namespace ChessLibrary
         /// <param name="desk">playing desk</param>
         /// <returns>list of positions</returns>
         public abstract List<Position> GetPositions(ChessDesk desk);
+
         /// <summary>
-        /// calculating available positions
+        /// calculating available positions if made by vector 
         /// </summary>
-        /// <param name="position">available figure direction</param>
+        /// <param name="directPosition">available figure direction</param>
         /// <param name="desk">playing desk</param>
         /// <returns>positions</returns>
-        public abstract List<Position> CalculateAvailablePositions(Position position, ChessDesk desk);
+        protected virtual IEnumerable<Position> CalculateAvailablePositions(Position directPosition, ChessDesk desk)
+        {
+            var availableList = new List<Position>();
+            var temporaryPosition = this.Position;
+            while (temporaryPosition.x is < 9 and >= 1 && temporaryPosition.y is < 9 and >= 1)
+            {
+                if (desk.player1.FiguresLeft.Any(figure => Equals(figure.Position, 
+                    new Position(temporaryPosition.x += directPosition.x,temporaryPosition.y += directPosition.y))))
+                {
+                    return availableList;
+                }
+                if (desk.player2.FiguresLeft.Any(figure => Equals(figure.Position, 
+                    new Position(temporaryPosition.x += directPosition.x,temporaryPosition.y += directPosition.y))))
+                {
+                    return availableList;
+                }
+                else
+                {
+                    temporaryPosition.x += directPosition.x;
+                    temporaryPosition.y += directPosition.y;
+                    availableList.Add(temporaryPosition);
+                }
+            }
+            return availableList;
+        }
         /// <summary>
         /// move figure to the existing available position
         /// </summary>

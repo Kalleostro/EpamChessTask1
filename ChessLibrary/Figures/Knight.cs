@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace ChessLibrary.Figures
@@ -25,10 +26,32 @@ namespace ChessLibrary.Figures
             return positions;
         }
 
-        public override List<Position> CalculateAvailablePositions(Vector2 position, ChessDesk desk)
+        protected override IEnumerable<Position> CalculateAvailablePositions(Position directPosition, ChessDesk desk)
         {
-            throw new System.NotImplementedException();
+            var availableList = new List<Position>();
+            var temporaryPosition = this.Position;
+            if (temporaryPosition.x is < 9 and >= 1 && temporaryPosition.y is < 9 and >= 1)
+            {
+                if (desk.player1.FiguresLeft.Any(figure => Equals(figure.Position, 
+                    new Position(temporaryPosition.x += directPosition.x,temporaryPosition.y += directPosition.y))))
+                {
+                    return availableList;
+                }
+                if (desk.player2.FiguresLeft.Any(figure => Equals(figure.Position, 
+                    new Position(temporaryPosition.x += directPosition.x,temporaryPosition.y += directPosition.y))))
+                {
+                    return availableList;
+                }
+                else
+                {
+                    temporaryPosition.x += directPosition.x;
+                    temporaryPosition.y += directPosition.y;
+                    availableList.Add(temporaryPosition);
+                }
+            }
+            return availableList;
         }
+
 
         public override void Move(Position position, ChessDesk desk)
         {

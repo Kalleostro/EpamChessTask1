@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ChessLibrary.Figures
 {
@@ -30,17 +31,7 @@ namespace ChessLibrary.Figures
             positions.AddRange(CalculateAvailablePositions(new Position(1,-1),desk));
             return positions;
         }
-
-        public override List<Position> GetAvailablePositions(ChessDesk desk)
-        {
-            var availableList = new List<Position>();
-            var temporaryPosition = this.Position;
-            while (temporaryPosition.x is < 8 and >= 1 && temporaryPosition.y is < 8 and >= 1)
-            {
-                temporaryPosition
-            }
-        }
-
+        
         public override void Move(Position position, ChessDesk desk)
         {
             if (GetPositions(desk).Contains(position))

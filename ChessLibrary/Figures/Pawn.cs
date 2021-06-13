@@ -7,7 +7,7 @@ namespace ChessLibrary.Figures
     public class Pawn:Figure
     {
         private ChessColors color;
-        private bool isFirstTurn = true; 
+        private bool isFirstTurn = true;
         public Pawn(int startX, int startY, ChessColors color)
         {
             IsDead = false;
@@ -69,6 +69,31 @@ namespace ChessLibrary.Figures
             if (GetPositions(desk).Contains(position))
                 this.Position = position;
             else throw new Exception("Invalid position!");
+            if (this.Position.y is 8 or 1)
+            {
+                int pawnIndex = desk.currentTurnPlayer.FiguresLeft.IndexOf(this);
+                Queen newFigure = new Queen(Position.x, Position.y);
+                desk.currentTurnPlayer.FiguresLeft[pawnIndex] = newFigure;
+            }
+
+        }
+
+        protected bool Equals(Pawn other)
+        {
+            return base.Equals(other) && color == other.color && isFirstTurn == other.isFirstTurn;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Pawn) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(base.GetHashCode(), (int) color, isFirstTurn);
         }
     }
 }
