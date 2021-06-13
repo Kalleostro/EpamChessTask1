@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection.Emit;
+using System.Collections.Generic;
 using ChessLibrary.Figures;
 
 namespace ChessLibrary
@@ -14,6 +15,8 @@ namespace ChessLibrary
             return this.MemberwiseClone();
         }
 
+        public abstract List<Position> GetPosition(ChessDesk desk);
+        public abstract List<Position> GetAvailablePositions(Position position, ChessDesk desk);
         public virtual void Move(Position position)
         {
             Position = position;
