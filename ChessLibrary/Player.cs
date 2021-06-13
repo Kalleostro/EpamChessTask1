@@ -24,11 +24,9 @@ namespace ChessLibrary
 
         public void ChangeFigureStatus(Figure figure)
         {
-            if (figure.IsDead)
-            {
-                FiguresLeft.Remove(figure);
-                FiguresDead.Add(figure);
-            }
+            if (!figure.IsDead) return;
+            FiguresLeft.Remove(figure);
+            FiguresDead.Add(figure);
         }
         private void InitializeFigures()
         {

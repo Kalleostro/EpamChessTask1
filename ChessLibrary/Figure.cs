@@ -7,7 +7,7 @@ namespace ChessLibrary
 {
     public abstract class Figure:ICloneable
     {
-        public bool IsDead { get; protected set; }
+        public bool IsDead { get; set; }
         public Position Position { get; protected set; }
 
         public object Clone()
