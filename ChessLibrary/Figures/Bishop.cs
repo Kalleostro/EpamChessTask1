@@ -9,7 +9,7 @@ namespace ChessLibrary.Figures
         public Bishop(int startX, int startY)
         {
             IsDead = false;
-            var coordinates = new Position(startX, startY);
+            this.Position = new Position(startX, startY);
         }
 
         public override bool Equals(object obj)

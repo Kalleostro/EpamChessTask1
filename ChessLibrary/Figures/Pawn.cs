@@ -11,7 +11,7 @@ namespace ChessLibrary.Figures
         public Pawn(int startX, int startY, ChessColors color)
         {
             IsDead = false;
-            var position = new Position(startX, startY);
+            this.Position = new Position(startX, startY);
             this.color = color;
         }
 
@@ -23,13 +23,13 @@ namespace ChessLibrary.Figures
             {
                 if (color.Equals(ChessColors.White))
                 {
-                    positions.Add(new Position(this.Position.x, this.Position.y + 2));
-                    positions.Add(new Position(this.Position.x, this.Position.y + 1));
+                    positions.Add(new Position(this.Position.X, this.Position.Y + 2));
+                    positions.Add(new Position(this.Position.X, this.Position.Y + 1));
                 }
                 else
                 {
-                    positions.Add(new Position(this.Position.x, this.Position.y - 2));
-                    positions.Add(new Position(this.Position.x, this.Position.y - 1));
+                    positions.Add(new Position(this.Position.X, this.Position.Y - 2));
+                    positions.Add(new Position(this.Position.X, this.Position.Y - 1));
                 }
                 isFirstTurn = false;
             } 
@@ -37,27 +37,27 @@ namespace ChessLibrary.Figures
             else switch (color)
             {
                 case ChessColors.White:
-                    positions.Add(new Position(this.Position.x, this.Position.y + 1));
+                    positions.Add(new Position(this.Position.X, this.Position.Y + 1));
                     break;
                 case ChessColors.Black:
-                    positions.Add(new Position(this.Position.x, this.Position.y - 1));
+                    positions.Add(new Position(this.Position.X, this.Position.Y - 1));
                     break;
                 default:
                     throw new Exception("Cannot finish the turn: ");
             }
             //if diagonally exists an enemy figure
-            foreach (Figure figure in color == ChessColors.White? desk.player2.FiguresLeft : desk.player1.FiguresLeft)
+            foreach (Figure figure in color == ChessColors.White? desk.Player2.FiguresLeft : desk.Player1.FiguresLeft)
                 if (color == ChessColors.White)
                 {
-                    if ((figure.Position.x - 1 == this.Position.x && figure.Position.y - 1 == this.Position.y)
-                        || (figure.Position.x + 1 == this.Position.x && figure.Position.y - 1 == this.Position.y))
+                    if ((figure.Position.X - 1 == this.Position.X && figure.Position.Y - 1 == this.Position.Y)
+                        || (figure.Position.X + 1 == this.Position.X && figure.Position.Y - 1 == this.Position.Y))
                     {
-                        positions.Add(new Position(figure.Position.x, figure.Position.y));
+                        positions.Add(new Position(figure.Position.X, figure.Position.Y));
                     }
-                    else if ((figure.Position.x - 1 == this.Position.x && figure.Position.y + 1 == this.Position.y)
-                             || (figure.Position.x + 1 == this.Position.x && figure.Position.y + 1 == this.Position.y))
+                    else if ((figure.Position.X - 1 == this.Position.X && figure.Position.Y + 1 == this.Position.Y)
+                             || (figure.Position.X + 1 == this.Position.X && figure.Position.Y + 1 == this.Position.Y))
                     {
-                        positions.Add(new Position(figure.Position.x, figure.Position.y));
+                        positions.Add(new Position(figure.Position.X, figure.Position.Y));
                     }
                 }
 
@@ -69,13 +69,13 @@ namespace ChessLibrary.Figures
             if (GetPositions(desk).Contains(position))
                 this.Position = position;
             else throw new Exception("Invalid position!");
-            if (this.Position.y is 8 or 1)
+            //Change Pawn to Queen if the field up/down border is reached
+            if (this.Position.Y is 8 or 1)
             {
-                int pawnIndex = desk.currentTurnPlayer.FiguresLeft.IndexOf(this);
-                Queen newFigure = new Queen(Position.x, Position.y);
-                desk.currentTurnPlayer.FiguresLeft[pawnIndex] = newFigure;
+                var pawnIndex = desk.CurrentTurnPlayer.FiguresLeft.IndexOf(this);
+                var newFigure = new Queen(Position.X, Position.Y);
+                desk.CurrentTurnPlayer.FiguresLeft[pawnIndex] = newFigure;
             }
-
         }
 
         protected bool Equals(Pawn other)

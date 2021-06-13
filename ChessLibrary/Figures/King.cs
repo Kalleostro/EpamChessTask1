@@ -9,8 +9,7 @@ namespace ChessLibrary.Figures
         public King(int startX, int startY)
         {
             IsDead = false;
-            var coordinates = new Position(startX, startY);
-            AvailableDirection = new Position();
+            this.Position = new Position(startX, startY);
         }
         public override List<Position> GetPositions(ChessDesk desk)
         {
@@ -30,22 +29,22 @@ namespace ChessLibrary.Figures
         {
             var availableList = new List<Position>();
             var temporaryPosition = this.Position;
-            if (temporaryPosition.x is < 9 and >= 1 && temporaryPosition.y is < 9 and >= 1)
+            if (temporaryPosition.X is < 9 and >= 1 && temporaryPosition.Y is < 9 and >= 1)
             {
-                if (desk.player1.FiguresLeft.Any(figure => Equals(figure.Position, 
-                    new Position(temporaryPosition.x += directPosition.x,temporaryPosition.y += directPosition.y))))
+                if (desk.Player1.FiguresLeft.Any(figure => Equals(figure.Position, 
+                    new Position(temporaryPosition.X += directPosition.X,temporaryPosition.Y += directPosition.Y))))
                 {
                     return availableList;
                 }
-                if (desk.player2.FiguresLeft.Any(figure => Equals(figure.Position, 
-                    new Position(temporaryPosition.x += directPosition.x,temporaryPosition.y += directPosition.y))))
+                if (desk.Player2.FiguresLeft.Any(figure => Equals(figure.Position, 
+                    new Position(temporaryPosition.X += directPosition.X,temporaryPosition.Y += directPosition.Y))))
                 {
                     return availableList;
                 }
                 else
                 {
-                    temporaryPosition.x += directPosition.x;
-                    temporaryPosition.y += directPosition.y;
+                    temporaryPosition.X += directPosition.X;
+                    temporaryPosition.Y += directPosition.Y;
                     availableList.Add(temporaryPosition);
                 }
             }

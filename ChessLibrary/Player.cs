@@ -7,16 +7,16 @@ namespace ChessLibrary
 {
     public class Player
     {
-        private ChessColors color;
-        public List<Figure> FiguresLeft { get; private set; }
-        public List<Figure> FiguresDead { get; private set; }
+        private ChessColors color; 
+        public List<Figure> FiguresLeft;
+        public List<Figure> FiguresDead;
 
         public Player(ChessColors color)
         {
             FiguresLeft = new List<Figure>();
             FiguresDead = new List<Figure>();
-            InitializeFigures();
             this.color = color;
+            InitializeFigures();
         }
 
         public Figure GetFigure(Position position)
@@ -37,9 +37,9 @@ namespace ChessLibrary
         /// </summary>
         private void InitializeFigures()
         {
-            if (color == ChessColors.White)
+            if (this.color == ChessColors.White)
             {
-                for (int i = 0; i < 8; i++)
+                for (int i = 1; i < 9; i++)
                     FiguresLeft.Add(new Pawn(i, 2, color));
                 FiguresLeft.Add(new Bishop(3,1));
                 FiguresLeft.Add(new Bishop(6,1));
@@ -52,7 +52,7 @@ namespace ChessLibrary
             }
             else
             {
-                for (int i = 0; i < 8; i++)
+                for (int i = 1; i < 9; i++)
                     FiguresLeft.Add(new Pawn(i, 7, color));
                 FiguresLeft.Add(new Bishop(3,8));
                 FiguresLeft.Add(new Bishop(6,8));

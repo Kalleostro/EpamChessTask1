@@ -6,28 +6,28 @@ namespace ChessLibrary
 {
     public class ChessDesk
     {
-        public Player player1;
-        public Player player2;
-        public Player currentTurnPlayer;
+        public Player Player1;
+        public Player Player2;
+        public Player CurrentTurnPlayer;
         private Logger logList;
 
         public ChessDesk()
         {
-            player1 = new Player(ChessColors.White);
-            player2 = new Player(ChessColors.Black);
-            currentTurnPlayer = player1;
+            Player1 = new Player(ChessColors.White);
+            Player2 = new Player(ChessColors.Black);
+            CurrentTurnPlayer = Player1;
             logList = new Logger();
         }
         public void MakeTurn(Position figureToChoosePosition, Position toMovePosition)
         {
             try
             {
-                currentTurnPlayer.GetFigure(figureToChoosePosition).Move(toMovePosition, this);
+                CurrentTurnPlayer.GetFigure(figureToChoosePosition).Move(toMovePosition, this);
                 CheckIfIntersects();
-                currentTurnPlayer = Equals(currentTurnPlayer, player1) ? player2 : player1;
-                logList.MakeLog("Player: " + currentTurnPlayer.ToString() + "figure: " + 
-                                currentTurnPlayer.GetFigure(figureToChoosePosition).GetType().ToString() + "new position: " + 
-                                toMovePosition.ToString()) ;
+                CurrentTurnPlayer = Equals(CurrentTurnPlayer, Player1) ? Player2 : Player1;
+                logList.MakeLog("Player: " + CurrentTurnPlayer + "figure: " + 
+                                CurrentTurnPlayer.GetFigure(figureToChoosePosition).GetType() + "new position: " + 
+                                toMovePosition) ;
             }
             catch (Exception e)
             {
@@ -39,32 +39,25 @@ namespace ChessLibrary
         /// </summary>
         private void CheckIfIntersects()
         {
-            foreach (var player1Figure in player1.FiguresLeft)
+            foreach (var player1Figure in Player1.FiguresLeft)
             {
-                foreach (var player2Figure in player2.FiguresLeft)
+                foreach (var player2Figure in Player2.FiguresLeft)
                 {
                     if (player1Figure.Position.Equals(player2Figure.Position))
                     {
-                        if (Equals(currentTurnPlayer, player1))
+                        if (Equals(CurrentTurnPlayer, Player1))
                         {
                             player2Figure.IsDead = true;
-                            player2.ChangeFigureStatus(player2Figure);
+                            Player2.ChangeFigureStatus(player2Figure);
                         }
                         else
                         {
                             player1Figure.IsDead = true;
-                            player1.ChangeFigureStatus(player1Figure);
+                            Player1.ChangeFigureStatus(player1Figure);
                         }
                     }
                 }
             }
-        }
-
-        public void ExchangePawn(Pawn pawn)
-        {
-            int pawnIndex = currentTurnPlayer.FiguresLeft.IndexOf(pawn);
-            Queen newFigure = new Queen(pawn.Position.x, pawn.Position.y);
-            currentTurnPlayer.FiguresLeft[pawnIndex] = newFigure;
         }
     }
 }

@@ -9,8 +9,7 @@ namespace ChessLibrary
     public abstract class Figure:ICloneable
     {
         public bool IsDead { get; set; }
-        public Position Position { get; protected set; }
-        public Position AvailableDirection { get; protected set; }
+        public Position Position { get; set; }
 
         public object Clone()
         {
@@ -33,22 +32,22 @@ namespace ChessLibrary
         {
             var availableList = new List<Position>();
             var temporaryPosition = this.Position;
-            while (temporaryPosition.x is < 9 and >= 1 && temporaryPosition.y is < 9 and >= 1)
+            while (temporaryPosition.X is < 9 and >= 1 && temporaryPosition.Y is < 9 and >= 1)
             {
-                if (desk.player1.FiguresLeft.Any(figure => Equals(figure.Position, 
-                    new Position(temporaryPosition.x += directPosition.x,temporaryPosition.y += directPosition.y))))
+                if (desk.Player1.FiguresLeft.Any(figure => Equals(figure.Position, 
+                    new Position(temporaryPosition.X += directPosition.X,temporaryPosition.Y += directPosition.Y))))
                 {
                     return availableList;
                 }
-                if (desk.player2.FiguresLeft.Any(figure => Equals(figure.Position, 
-                    new Position(temporaryPosition.x += directPosition.x,temporaryPosition.y += directPosition.y))))
+                if (desk.Player2.FiguresLeft.Any(figure => Equals(figure.Position, 
+                    new Position(temporaryPosition.X += directPosition.X,temporaryPosition.Y += directPosition.Y))))
                 {
                     return availableList;
                 }
                 else
                 {
-                    temporaryPosition.x += directPosition.x;
-                    temporaryPosition.y += directPosition.y;
+                    temporaryPosition.X += directPosition.X;
+                    temporaryPosition.Y += directPosition.Y;
                     availableList.Add(temporaryPosition);
                 }
             }

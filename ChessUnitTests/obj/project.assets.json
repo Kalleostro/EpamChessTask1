@@ -1225,6 +1225,16 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
+      },
+      "ChessLibrary/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/ChessLibrary.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ChessLibrary.dll": {}
+        }
       }
     }
   },
@@ -4613,10 +4623,16 @@
         "system.xml.xpath.xmldocument.4.3.0.nupkg.sha512",
         "system.xml.xpath.xmldocument.nuspec"
       ]
+    },
+    "ChessLibrary/1.0.0": {
+      "type": "project",
+      "path": "../ChessLibrary/ChessLibrary.csproj",
+      "msbuildProject": "../ChessLibrary/ChessLibrary.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "ChessLibrary >= 1.0.0",
       "Microsoft.NET.Test.Sdk >= 16.5.0",
       "NUnit >= 3.12.0",
       "NUnit3TestAdapter >= 3.16.1"
@@ -4646,7 +4662,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/Users/kalleostro/Desktop/EpamTask1Shemetkov/EpamChessTask/ChessLibrary/ChessLibrary.csproj": {
+              "projectPath": "/Users/kalleostro/Desktop/EpamTask1Shemetkov/EpamChessTask/ChessLibrary/ChessLibrary.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
