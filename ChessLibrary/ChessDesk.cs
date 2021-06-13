@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ChessLibrary.Figures;
 
@@ -8,21 +9,33 @@ namespace ChessLibrary
         public Player player1;
         public Player player2;
         private Player currentTurnPlayer;
+        private Logger logList;
 
         public ChessDesk()
         {
             player1 = new Player(ChessColors.White);
             player2 = new Player(ChessColors.Black);
             currentTurnPlayer = player1;
+            logList = new Logger();
         }
-        public void ChessGameProcess(Position figureToChoosePosition, Position toMovePosition)
+        public void MakeTurn(Position figureToChoosePosition, Position toMovePosition)
         {
-            currentTurnPlayer.GetFigure(figureToChoosePosition).Move(toMovePosition);
-            BeatFigure();
-            currentTurnPlayer = Equals(currentTurnPlayer, player1) ? player2 : player1;
+            try
+            {
+                currentTurnPlayer.GetFigure(figureToChoosePosition).Move(toMovePosition, this);
+                CheckIfIntersects();
+                currentTurnPlayer = Equals(currentTurnPlayer, player1) ? player2 : player1;
+                logList.MakeLog("Player: " + currentTurnPlayer.ToString() + "figure: " + 
+                                currentTurnPlayer.GetFigure(figureToChoosePosition).GetType().ToString() + "new position: " + 
+                                toMovePosition.ToString()) ;
+            }
+            catch (Exception e)
+            {
+                logList.MakeLog(e.Message);
+            }
         }
 
-        private void BeatFigure()
+        private void CheckIfIntersects()
         {
             foreach (var player1Figure in player1.FiguresLeft)
             {
@@ -44,9 +57,5 @@ namespace ChessLibrary
                 }
             }
         }
-        // public void Intersects(Player player1, Player player2)
-        // {
-        //     player1.King.Coordinates == player2
-        // }
     }
 }

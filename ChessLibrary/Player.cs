@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ChessLibrary.Figures;
 using System.Linq;
@@ -7,12 +8,13 @@ namespace ChessLibrary
     public class Player
     {
         private ChessColors color;
-        public bool Turn;
-        public List<Figure> FiguresLeft;
-        public List<Figure> FiguresDead;
+        public List<Figure> FiguresLeft { get; private set; }
+        public List<Figure> FiguresDead { get; private set; }
 
         public Player(ChessColors color)
         {
+            FiguresLeft = new List<Figure>();
+            FiguresDead = new List<Figure>();
             InitializeFigures();
             this.color = color;
         }
@@ -58,19 +60,27 @@ namespace ChessLibrary
             }
         }
 
-        public override bool Equals(object? obj)
+        protected bool Equals(Player other)
         {
-            return base.Equals(obj);
+            return color == other.color && Equals(FiguresLeft, other.FiguresLeft) && Equals(FiguresDead, other.FiguresDead);
         }
 
         public override string ToString()
         {
-            return base.ToString();
+            return $"{nameof(color)}: {color}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Player) obj);
         }
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return HashCode.Combine((int) color, FiguresLeft, FiguresDead);
         }
     }
 }

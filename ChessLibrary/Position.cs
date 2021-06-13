@@ -2,10 +2,10 @@ namespace ChessLibrary.Figures
 {
     public struct Position
         {
-            public uint x { get; set; } 
-            public uint y { get; set; } 
+            public int x { get; set; } 
+            public int y { get; set; } 
 
-            public Position(uint x, uint y)
+            public Position(int x, int y)
             {
                 this.x = x;
                 this.y = y;

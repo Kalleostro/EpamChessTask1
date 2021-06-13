@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace ChessLibrary.Figures
@@ -20,21 +21,13 @@ namespace ChessLibrary.Figures
                 return false;
             return this == obj;
         }
-        public override List<Position> GetPosition(ChessDesk desk)
+        public override List<Position> GetPositions(ChessDesk desk)
         {
             var positions = new List<Position>();
-            positions.AddRange(GetAvailablePositions(desk));
-            // {
-            //     new Position(this.Position.x + 1, this.Position.y),
-            //     new Position(this.Position.x + 1, this.Position.y + 1),
-            //     new Position(this.Position.x, this.Position.y + 1),
-            //     new Position(this.Position.x - 1, this.Position.y - 1),
-            //     new Position(this.Position.x, this.Position.y - 1),
-            //     new Position(this.Position.x + 1, this.Position.y - 1),
-            //     new Position(this.Position.x - 1, this.Position.y),
-            //     new Position(this.Position.x - 1, this.Position.y + 1)
-            // };
-            
+            positions.AddRange(CalculateAvailablePositions(new Position(1,1),desk));
+            positions.AddRange(CalculateAvailablePositions(new Position(-1,-1),desk));
+            positions.AddRange(CalculateAvailablePositions(new Position(-1,1),desk));
+            positions.AddRange(CalculateAvailablePositions(new Position(1,-1),desk));
             return positions;
         }
 
@@ -48,9 +41,11 @@ namespace ChessLibrary.Figures
             }
         }
 
-        public override void Move(Position position)
+        public override void Move(Position position, ChessDesk desk)
         {
-            base.Move(position);
+            if (GetPositions(desk).Contains(position))
+                this.Position = position;
+            else throw new Exception("Invalid position!");
         }
         public override int GetHashCode()
         {
