@@ -21,7 +21,12 @@ namespace ChessLibrary
 
         public Figure GetFigure(Position position)
         {
-            return FiguresLeft.First(figure => figure.Position.Equals(position));
+            foreach (var figure in FiguresLeft)
+            {
+                if (figure.Position.Equals(position))
+                    return figure;
+            }
+            throw new Exception("Figure is not found " + position.X + " " + position.Y);
         }
         /// <summary>
         /// changing figure status in case of death
